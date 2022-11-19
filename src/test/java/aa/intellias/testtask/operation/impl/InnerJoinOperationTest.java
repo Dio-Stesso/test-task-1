@@ -7,7 +7,9 @@ import aa.intellias.testtask.collection.JoinedDataRow;
 import aa.intellias.testtask.operation.JoinOperation;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 import java.util.Set;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -155,6 +157,26 @@ class InnerJoinOperationTest {
                 integerStringStringJoinOperation.join(rowList1, rowList2);
         assertEquals(expectedCollection, joinedCollection,
                 "The method must return a correct number of items in the collection.");
+    }
+
+    @Test
+    void shouldWorkWithQueueCollection() {
+        Collection<DataRow<Integer, String>> rowList =
+                List.of(firstDataRow2, firstDataRow3, firstDataRow1);
+        Queue<DataRow<Integer, String>> rowQueue = new LinkedList<>();
+        rowQueue.add(secondDataRow1);
+        rowQueue.add(secondDataRow3);
+        rowQueue.add(secondDataRow2);
+
+        Queue<JoinedDataRow<Integer, String, String>> expectedCollection = new LinkedList<>();
+        expectedCollection.add(joinedDataRow1);
+        expectedCollection.add(joinedDataRow2);
+        expectedCollection.add(joinedDataRow3);
+
+        Collection<JoinedDataRow<Integer, String, String>> joinedCollection =
+                integerStringStringJoinOperation.join(rowList, rowQueue);
+        assertEquals(expectedCollection, joinedCollection,
+                "The method must return a correct item collection.");
     }
 
     @Test

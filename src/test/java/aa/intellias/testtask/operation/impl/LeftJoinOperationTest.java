@@ -7,7 +7,9 @@ import aa.intellias.testtask.collection.JoinedDataRow;
 import aa.intellias.testtask.operation.JoinOperation;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 import java.util.Set;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -78,6 +80,26 @@ class LeftJoinOperationTest {
                 integerStringStringJoinOperation.join(rowList1, rowList2);
         assertEquals(expectedCollection, joinedCollection,
                 "The method must return a correct item list.");
+    }
+
+    @Test
+    void shouldWorkWithLeftQueueCollection() {
+        Queue<DataRow<Integer, String>> rowQueue = new LinkedList<>();
+        rowQueue.add(firstDataRow6);
+        rowQueue.add(firstDataRow3);
+        rowQueue.add(firstDataRow1);
+        Collection<DataRow<Integer, String>> rowList =
+                List.of(secondDataRow1, secondDataRow3);
+
+        Queue<JoinedDataRow<Integer, String, String>> expectedCollection = new LinkedList<>();
+        expectedCollection.add(joinedDataRow1);
+        expectedCollection.add(joinedDataRow2);
+        expectedCollection.add(joinedDataRow3);
+
+        Collection<JoinedDataRow<Integer, String, String>> joinedCollection =
+                integerStringStringJoinOperation.join(rowQueue, rowList);
+        assertEquals(expectedCollection, joinedCollection,
+                "The method must return a correct item collection.");
     }
 
     @Test
